@@ -222,13 +222,18 @@ class QueryResult(object):
         start_time = time()
 
         try:
-            cursor.execute(self.sql)
+            sep_sql = self.sql.strip().split(";")
+            statements = filter(bool, sep_sql)
+            if len(sep_sql) > 1:
+                for statement in statements:
+                    cursor.execute(statement)
+            else:
+                cursor.execute(self.sql)
         except DatabaseError as e:
             cursor.close()
             raise e
 
         return cursor, ((time() - start_time) * 1000)
-
 
 @six.python_2_unicode_compatible
 class ColumnHeader(object):

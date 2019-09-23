@@ -84,7 +84,7 @@ def get_params_from_request(request):
         tuples = val.split('|')
         for t in tuples:
             res = t.split(':')
-            d[res[0]] = res[1]
+            d[res[0]] = ':'.join(res[1:])
         return d
     except Exception:
         return None
