@@ -34,19 +34,19 @@ Sql Explorer is MIT licensed, and pull requests are welcome.
 
 **A view of a query**
 
-.. image:: https://s3-us-west-1.amazonaws.com/django-sql-explorer/2.png
+.. image:: https://s3-us-west-1.amazonaws.com/django-sql-explorer/2019_2.png
 
 **Viewing all queries**
 
-.. image:: https://s3-us-west-1.amazonaws.com/django-sql-explorer/query-list.png
+.. image:: https://s3-us-west-1.amazonaws.com/django-sql-explorer/2019_querylist.png
 
 **Quick access to DB schema info**
 
-.. image:: https://s3-us-west-1.amazonaws.com/django-sql-explorer/3.png
+.. image:: https://s3-us-west-1.amazonaws.com/django-sql-explorer/2019_3.png
 
 **Snapshot query results to S3 & download as csv**
 
-.. image:: https://s3-us-west-1.amazonaws.com/django-sql-explorer/snapshots.png
+.. image:: https://s3-us-west-1.amazonaws.com/django-sql-explorer/2019_snapshots.png
 
 
 Features
@@ -283,10 +283,12 @@ minimum.
 =========================================================== ======= ================
 Name                                                        Version License
 =========================================================== ======= ================
-`sqlparse <https://github.com/andialbrecht/sqlparse/>`_     0.2.4   BSD
+`six <https://github.com/benjaminp/six/>`_                  1.12.0  MIT
+`sqlparse <https://github.com/andialbrecht/sqlparse/>`_     0.3.0   BSD
 `unicodecsv <https://github.com/jdunck/python-unicodecsv>`_ 0.14.1  BSD
 =========================================================== ======= ================
 
+- six is used for py2-3 compatibility
 - sqlparse is used for SQL formatting
 
 *Python - Optional Dependencies*
@@ -296,8 +298,8 @@ Name                                                                 Version Lic
 ==================================================================== ======= ================
 `celery <http://www.celeryproject.org/>`_                            3.1     BSD
 `django-celery <http://www.celeryproject.org/>`_                     3.1     BSD
-`Factory Boy <https://github.com/rbarrois/factory_boy>`_             2.10    MIT
-`xlsxwriter <http://xlsxwriter.readthedocs.io/>`_                    1.0.2   BSD
+`Factory Boy <https://github.com/rbarrois/factory_boy>`_             2.12.0  MIT
+`xlsxwriter <http://xlsxwriter.readthedocs.io/>`_                    1.2.1   BSD
 `boto <https://github.com/boto/boto>`_                               2.46    MIT
 ==================================================================== ======= ================
 
@@ -345,6 +347,9 @@ then:
 
 ...99%! Huzzah!
 
+Running Locally
+===============
+
 There is also a test_project that you can use to kick the tires. Just
 create a new virtualenv, cd into test_project and run start.sh (or
 walk through the steps yourself) to get a test instance of the app up
@@ -385,6 +390,6 @@ Release Process
 ===============
 
 Release process is documented `here
-<https://gist.github.com/chrisclark/07a6b4ef0114fdfa2ee0>`_. If there
+<https://github.com/groveco/django-sql-explorer/blob/master/pypi-release-checklist.md>`_. If there
 are problems with the release, please help me improve the process so
 it doesn't happen again!
