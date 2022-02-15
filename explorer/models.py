@@ -243,7 +243,6 @@ class QueryResult(object):
 
         return cursor, ((time() - start_time) * 1000)
 
-
 @six.python_2_unicode_compatible
 class ColumnHeader(object):
 
