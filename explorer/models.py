@@ -217,6 +217,13 @@ class QueryResult(object):
                 for ix, t in transforms:
                     r[ix] = t.format(str(r[ix]))
 
+    def is_a_comment(self, statement):
+        try:
+            statement = statement.strip()
+            return statement.startswith("--") or statement.startswith("/*")
+        except AttributeError:
+            return
+
     def execute_query(self):
         cursor = self.connection.cursor()
         start_time = time()
@@ -226,7 +233,8 @@ class QueryResult(object):
             statements = filter(bool, sep_sql)
             if len(sep_sql) > 1:
                 for statement in statements:
-                    cursor.execute(statement)
+                    if not self.is_a_comment(statement):
+                        cursor.execute(statement)
             else:
                 cursor.execute(self.sql)
         except DatabaseError as e:
@@ -234,6 +242,7 @@ class QueryResult(object):
             raise e
 
         return cursor, ((time() - start_time) * 1000)
+
 
 @six.python_2_unicode_compatible
 class ColumnHeader(object):

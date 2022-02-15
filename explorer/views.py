@@ -353,7 +353,7 @@ class QueryView(PermissionRequiredMixin, ExplorerContextMixin, View):
         query.save()  # updates the modified date
         show = url_get_show(request)
         rows = url_get_rows(request)
-        vm = query_viewmodel(request.user, query, form=form, run_query=show, rows=rows)
+        vm = query_viewmodel(request.user, query, form=form, run_query=False, rows=rows)
         fullscreen = url_get_fullscreen(request)
         template = 'fullscreen' if fullscreen else 'query'
         return self.render_template('explorer/%s.html' % template, vm)
