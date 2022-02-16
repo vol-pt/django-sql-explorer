@@ -353,9 +353,9 @@ class QueryView(PermissionRequiredMixin, ExplorerContextMixin, View):
         query.save()  # updates the modified date
         show = url_get_show(request)
         rows = url_get_rows(request)
-        vm = query_viewmodel(request.user, query, form=form, run_query=False, rows=rows)
         fullscreen = url_get_fullscreen(request)
         template = 'fullscreen' if fullscreen else 'query'
+        vm = query_viewmodel(request, query, form=form, run_query=template == "fullscreen", rows=rows)
         return self.render_template('explorer/%s.html' % template, vm)
 
     def post(self, request, query_id):
@@ -366,7 +366,7 @@ class QueryView(PermissionRequiredMixin, ExplorerContextMixin, View):
         show = url_get_show(request)
         query, form = QueryView.get_instance_and_form(request, query_id)
         success = form.is_valid() and form.save()
-        vm = query_viewmodel(request.user,
+        vm = query_viewmodel(request,
                              query,
                              form=form,
                              run_query=show,
@@ -382,15 +382,30 @@ class QueryView(PermissionRequiredMixin, ExplorerContextMixin, View):
         return query, form
 
 
-def query_viewmodel(user, query, title=None, form=None, message=None, run_query=True, error=None, rows=app_settings.EXPLORER_DEFAULT_ROWS):
+def query_viewmodel(request, query, title=None, form=None, message=None, run_query=True, error=None, rows=app_settings.EXPLORER_DEFAULT_ROWS):
     res = None
     ql = None
     if run_query:
         try:
-            res, ql = query.execute_with_logging(user)
+            res, ql = query.execute_with_logging(request.user)
         except DatabaseError as e:
             error = str(e)
     has_valid_results = not error and res and run_query
+
+    fullscreen_params = request.GET.copy()
+    if 'fullscreen' not in fullscreen_params:
+        fullscreen_params.update({
+            'fullscreen': 1
+        })
+    if 'rows' not in fullscreen_params:
+        fullscreen_params.update({
+            'rows': rows
+        })
+    if 'querylog_id' not in fullscreen_params and ql:
+        fullscreen_params.update({
+            'querylog_id': ql.id
+        })
+
     ret = {
         'tasks_enabled': app_settings.ENABLE_TASKS,
         'params': query.available_params(),
@@ -409,5 +424,6 @@ def query_viewmodel(user, query, title=None, form=None, message=None, run_query=
         'snapshots': query.snapshots if query.snapshot else [],
         'ql_id': ql.id if ql else None,
         'unsafe_rendering': app_settings.UNSAFE_RENDERING,
+        'fullscreen_params': fullscreen_params.urlencode(),
     }
     return ret
