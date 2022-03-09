@@ -385,7 +385,7 @@ class QueryView(PermissionRequiredMixin, ExplorerContextMixin, View):
 def query_viewmodel(request, query, title=None, form=None, message=None, run_query=True, error=None, rows=app_settings.EXPLORER_DEFAULT_ROWS):
     res = None
     ql = None
-    if run_query:
+    if run_query and request.user.is_authenticated:
         try:
             res, ql = query.execute_with_logging(request.user)
         except DatabaseError as e:
