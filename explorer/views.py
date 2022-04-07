@@ -335,7 +335,7 @@ class PlayQueryView(PermissionRequiredMixin, ExplorerContextMixin, View):
         fullscreen = url_get_fullscreen(request)
         template = 'fullscreen' if fullscreen else 'play'
         form = QueryForm(request.POST if len(request.POST) else None, instance=query)
-        return self.render_template('explorer/%s.html' % template, query_viewmodel(request.user,
+        return self.render_template('explorer/%s.html' % template, query_viewmodel(request,
                                                                                    query,
                                                                                    title="Playground",
                                                                                    run_query=run_query,
