@@ -406,7 +406,7 @@ def query_viewmodel(request, query, title=None, form=None, message=None, run_que
             'querylog_id': ql.id
         })
 
-    ret = {
+    return {
         'tasks_enabled': app_settings.ENABLE_TASKS,
         'params': query.available_params(),
         'title': title,
@@ -426,4 +426,3 @@ def query_viewmodel(request, query, title=None, form=None, message=None, run_que
         'unsafe_rendering': app_settings.UNSAFE_RENDERING,
         'fullscreen_params': fullscreen_params.urlencode(),
     }
-    return ret

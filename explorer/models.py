@@ -220,7 +220,7 @@ class QueryResult(object):
     def is_a_comment(self, statement):
         try:
             statement = statement.strip()
-            return statement.startswith("--") or statement.startswith("/*")
+            return statement.startswith("--") or statement.startswith("/*") or statement.startswith("*")
         except AttributeError:
             return
 
