@@ -5,10 +5,10 @@
 {% block sql_explorer_navlinks %}
     {% if can_change %}
       <li{% if not query %} class="active" {% endif %}><a href="{% url "query_create" %}">New Query</a></li>
-      <li><a href="{% url "explorer_playground" %}">Playground</a></li>
+      <li><a class="link" href="{% url "explorer_playground" %}">Playground</a></li>
     {% endif %}
-    {% if query %}<li class="active"><a href="">Query Detail</a></li>{% endif %}
-    <li><a href="{% url "explorer_logs" %}">Logs</a></li>
+    {% if query %}<li class="active"><a class="link" href="">Query Detail</a></li>{% endif %}
+    <li><a class="link" href="{% url "explorer_logs" %}">Logs</a></li>
 {% endblock %}
 
 {% block sql_explorer_content %}
@@ -17,7 +17,7 @@
         <h2>{% if query %}{{ query.title }}{% if shared %}<small>&nbsp;&nbsp;shared</small>{% endif %}{% else %}New Query{% endif %}</h2>
         {% if query %}
             <div class="text-right">
-                <a href="{% url "explorer_logs" %}?query_id={{ query.id }}"><h2 class="small">History</h2></a>
+                <a class="link" href="{% url "explorer_logs" %}?query_id={{ query.id }}"><h2 class="small">History</h2></a>
             </div>
         {% endif %}
         {% if message %}
@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-6 text-right">
                           {% if query %}
-                            <small><a href="#" title="Open in playground" id="playground_button"><i class="glyphicon glyphicon-new-window"></i></a></small>
+                            <small><a class="link" href="#" title="Open in playground" id="playground_button"><i class="glyphicon glyphicon-new-window"></i></a></small>
                           {% endif %}
                         </div>
                       </div>
